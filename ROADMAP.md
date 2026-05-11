@@ -24,6 +24,63 @@ No code yet — pure concepts. Solid foundation before touching any chain.
 
 ---
 
+## Phase 1.5: Solidity — Smart Contract Development
+
+> Bridge between foundations and Phase 2. Learn Solidity theory,
+> practice with logic exercises, then build real contracts from scratch.
+
+### 1.5A — Solidity Language
+
+| # | Milestone | Topics |
+|---|-----------|--------|
+| S1 | Solidity Basics | Variables, types, functions, visibility, state vs memory vs calldata |
+| S2 | Control Flow | If/else, loops, require/revert/assert, custom errors |
+| S3 | Data Structures | Mappings, arrays, structs, enums, nested mappings |
+| S4 | OOP in Solidity | Contracts, inheritance, interfaces, abstract contracts, libraries |
+| S5 | Special Variables | msg.sender, msg.value, block.timestamp, tx.origin, address(this) |
+| S6 | ETH Handling | Payable functions, receive/fallback, transfer vs call vs send |
+| S7 | Events & Logging | Emit events, indexed params, why events matter for dApps |
+| S8 | Modifiers & Access | Custom modifiers, onlyOwner, role-based access, OpenZeppelin |
+| S9 | Advanced Types | Function types, assembly basics, gas optimization patterns |
+| S10 | Security Patterns | CEI pattern, reentrancy guards, safe math, checks in practice |
+
+### 1.5B — Practice Sets (After Each Theory Milestone)
+
+Each milestone has a set of logic exercises to solve before moving on.
+Exercises go from simple → complex within each set.
+
+| # | Practice Set | Focus |
+|---|--------------|-------|
+| P-S1 | Variables & Types | Declare, assign, convert between types |
+| P-S2 | Control Flow | Write validation logic, revert conditions |
+| P-S3 | Data Structures | Build a student registry, voting tally |
+| P-S4 | OOP | Inherit contracts, implement interfaces |
+| P-S5 | Special Variables | Write access controlled functions |
+| P-S6 | ETH Handling | Accept, track, and withdraw ETH safely |
+| P-S7 | Events | Emit and structure events for all state changes |
+| P-S8 | Modifiers | Build reusable access control modifiers |
+| P-S9 | Optimization | Rewrite gas-heavy code to be cheaper |
+| P-S10 | Security | Identify and fix vulnerable code snippets |
+
+### 1.5C — Contracts to Build (Small → Big)
+
+Each contract applies LLD first (design → then code).
+
+| # | Contract | Concepts Applied | Size |
+|---|----------|-----------------|------|
+| C1 | Counter | Basic state, functions, events | Tiny |
+| C2 | Ether Wallet | ETH handling, receive, withdraw, owner | Small |
+| C3 | Multi-Sig Wallet | Arrays, mappings, access control, confirmations | Small |
+| C4 | ERC-20 Token | Interfaces, events, allowance, transfer logic | Small |
+| C5 | ERC-721 NFT | Structs, mappings, mint/burn, ownership | Small |
+| C6 | Voting Contract | Structs, mappings, time locks, access control | Medium |
+| C7 | Staking Contract | ETH locking, reward calculation, time logic | Medium |
+| C8 | Dutch Auction | Price decay over time, bidding, settlement | Medium |
+| C9 | Simple DEX | Token swaps, liquidity, price formula (x*y=k) | Big |
+| C10 | Lending Protocol | Collateral, borrow, interest, liquidation | Big |
+
+---
+
 ## Phase 2: Node.js + TypeScript (Deep Revision + Projects)
 
 ### 2.0 — Foundation: Understanding Node.js & TypeScript
@@ -174,7 +231,8 @@ project/
 
 | Phase | Status |
 |-------|--------|
-| Phase 1: Blockchain Foundations | ⬜ Not started |
+| Phase 1: Blockchain Foundations | ✅ Complete |
+| Phase 1.5: Solidity | ⬜ Not started |
 | Phase 2: Node.js + TS + DBs | ⬜ Not started |
 | Phase 3: Rust + Solana + Cosmos | ⬜ Not started |
 | Phase 4: Go + Infra | ⬜ Not started |
