@@ -90,7 +90,7 @@ contract DutchAuction {
             }
                 (bool ok2, ) = payable(currentAuction.sender).call{value: effectivePrice}(""); 
                 if(!ok2) revert TransferFailed();
-            IERC721(currentAuction.nftContract).safeTransferFrom(address(this), msg.sender, currentAuction.tokenId);
+            IERC721(currentAuction.nftContract).transferFrom(address(this), msg.sender, currentAuction.tokenId);
         }else {
             revert LowBidAttempt(effectivePrice);
         }       
@@ -106,7 +106,7 @@ contract DutchAuction {
 
         auctions[auctionId].active = false;
 
-        IERC721(auctions[auctionId].nftContract).safeTransferFrom(address(this), auctions[auctionId].sender, auctions[auctionId].tokenId);
+        IERC721(auctions[auctionId].nftContract).transferFrom(address(this), auctions[auctionId].sender, auctions[auctionId].tokenId);
 
         emit AuctionCancelled(auctionId);
     }
