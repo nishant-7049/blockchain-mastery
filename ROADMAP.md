@@ -232,8 +232,8 @@ project/
 | Phase | Status |
 |-------|--------|
 | Phase 1: Blockchain Foundations | ✅ Complete |
-| Phase 1.5: Solidity | ⬜ Not started |
-| Phase 2: Node.js + TS + DBs | ⬜ Not started |
+| Phase 1.5: Solidity | ✅ Complete (C1–C10, 82 tests passing) |
+| Phase 2: Node.js + TS + DBs | 🔄 In progress (2.0a) |
 | Phase 3: Rust + Solana + Cosmos | ⬜ Not started |
 | Phase 4: Go + Infra | ⬜ Not started |
 
