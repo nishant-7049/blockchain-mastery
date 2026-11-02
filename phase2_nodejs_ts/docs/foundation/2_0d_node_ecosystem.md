@@ -110,6 +110,10 @@ ESM can import CJS        ✅ (with some caveats)
 CJS cannot require() ESM  ❌ (require is sync, ESM loading is async)
 ```
 
+> **Update (Node 22.12+ / 20.19+):** `require()` of ESM now works **if the ES module has no top-level `await`**
+> (its graph can be evaluated synchronously). A module with top-level `await` still throws `ERR_REQUIRE_ASYNC_MODULE`.
+> Practice problem PS0/08 makes you run into this.
+
 That last one is where it bites you. If a package ships ESM-only (`node-fetch` v3, `chalk` v5, `ora` v6), you can't `require()` it in a CJS file. You must use dynamic `import()` or convert your project to ESM.
 
 **How Node decides which system to use:**
