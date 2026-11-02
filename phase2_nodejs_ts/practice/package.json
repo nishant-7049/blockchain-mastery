@@ -1,0 +1,14 @@
+{
+  "name": "nodejs-practice",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node check.ts",
+    "test": "node check.ts all",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
