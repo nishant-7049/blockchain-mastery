@@ -1,0 +1,31 @@
+{
+  // Learning repo: suggestions are off so solutions come from recall, not from a popup.
+  // Scoped to this workspace only — your other projects are unaffected.
+
+  // --- AI / inline "ghost text" (Copilot, Continue, Codeium, etc.) ---
+  "editor.inlineSuggest.enabled": false,
+  "github.copilot.enable": {
+    "*": false,
+    "markdown": false,
+    "typescript": false,
+    "javascript": false,
+    "solidity": false
+  },
+
+  // --- Built-in IntelliSense popup ---
+  "editor.quickSuggestions": {
+    "other": false,
+    "comments": false,
+    "strings": false
+  },
+  "editor.suggestOnTriggerCharacters": false,
+  "editor.wordBasedSuggestions": "off",
+  "editor.tabCompletion": "off",
+  "editor.acceptSuggestionOnEnter": "off",
+
+  // --- Still available on purpose ---
+  // Ctrl+Space = ask for suggestions manually when you actually want them.
+  // Red squiggles and hover docs stay on — those teach you, they don't answer for you.
+  "editor.parameterHints.enabled": true,
+  "editor.suggest.showStatusBar": true
+}

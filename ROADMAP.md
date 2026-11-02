@@ -96,6 +96,17 @@ Each contract applies LLD first (design → then code).
 | 2.0e | Why TypeScript | What problems JS has that TS solves, type system philosophy (structural vs nominal), how tsc works (compilation pipeline), TS at runtime (it doesn't exist), tsconfig deep dive |
 | 2.0f | TypeScript's Type System | Why it's "unsound by design", type narrowing, control flow analysis, declaration files (.d.ts), how TS interacts with node_modules |
 
+### 2.P — Practice Track (problem-based, runs alongside 2.0 / 2A)
+
+> Every milestone gets a problem set in `phase2_nodejs_ts/practice/`: real incidents to fix, where the
+> concept is the only way to the solution. Tests are the judge, and each problem ends with debrief questions.
+
+| # | Set | Covers |
+|---|-----|--------|
+| PS0 | Foundations in Action (8 problems) | 2.0a–2.0e: floats vs bigint, event loop blocking, await races, promise eagerness, timers, Buffers, structural typing, CJS/ESM |
+| PS1 | Async Mastery | 2.2 |
+| PS2 | Type System | 2.0f + 2.1 |
+
 ### 2A — Language & Concepts Deep Dive
 
 | # | Milestone | Topics |
@@ -227,13 +238,20 @@ project/
 
 ---
 
+## How I Work Through This
+
+See **[STUDY_PLAN.md](STUDY_PLAN.md)** for the rules (one track at a time, units not hours, re-entry
+protocol after breaks) and **[NEXT.md](NEXT.md)** for the single next action.
+
+---
+
 ## Progress Tracker
 
 | Phase | Status |
 |-------|--------|
 | Phase 1: Blockchain Foundations | ✅ Complete |
 | Phase 1.5: Solidity | ✅ Complete (C1–C10, 82 tests passing) |
-| Phase 2: Node.js + TS + DBs | 🔄 In progress (2.0a) |
+| Phase 2: Node.js + TS + DBs | 🔄 In progress (2.0a–2.0e read → PS0 practice) |
 | Phase 3: Rust + Solana + Cosmos | ⬜ Not started |
 | Phase 4: Go + Infra | ⬜ Not started |
 
