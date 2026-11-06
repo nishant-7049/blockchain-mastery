@@ -5,27 +5,44 @@
 
 ## 🎯 Right now
 
-**Rebuild pass.** Decided 2026-11-02: re-solve PS0 **01 → 05 from blank**, in order, by myself.
-Not because the concepts are gone — the debriefs prove they aren't — but because for 03 and 04 the
-diagnosis was mine and the *implementation* was Claude's, and explaining a fix is not the same as
-producing it. Job situation makes depth non-negotiable: no more hanging threads.
+**Two things, in this order.**
 
-The starters are restored and all five are ⬜ again. My old solutions, my scratch tests and every
-`NOTES.md` are in **`phase2_nodejs_ts/practice/.solutions/`** (gitignored — on disk, out of the repo).
+**1. Close 01 (5 minutes).** `01_the_missing_wei/NOTES.md` is written but **Q3 is TODO**:
 
-**The rule for this pass: do not open `.solutions/` until my own version passes, or until I have been
-genuinely stuck for 30+ minutes.** Reading my own old answer is not solving it.
+```bash
+node -e "console.log(JSON.stringify({ v: 1n }))"
+```
 
-Start with **01 — The Missing Wei** (★☆☆). It should be quick; that's the point, it rebuilds the habit.
+Why is that a problem for an API returning balances? Where does it bite in a real backend (DB hands
+you a `bigint`, handler does `res.json({ balance })`, then what)? And if you "fix" it the obvious way,
+what have you just done to the client that reads the number? Answer it, and 01 is fully closed.
+
+**2. CV + application pipeline (this session, not later).** Decided 2026-11-06, and the reason is lag,
+not priority: applications convert on a 2–6 week delay, so sending the first batch this week costs no
+learning time but pulls every offer two weeks earlier. Interviews also tell me *which* gaps matter —
+right now I'm guessing it's Node internals; three screening calls would say whether it's that, system
+design, DSA or Solidity. And writing "what have I built" shows exactly which project is missing.
+
+Claude needs these to draft it (rough notes are fine, no formatting):
+1. Work history — the company that closed: title, dates, what the product was, what **I** built. Plus earlier roles.
+2. My actual day-to-day stack at work (MongoDB/DocumentDB + AWS are visible in my ssh config; what else?).
+3. Education — degree, college, year.
+4. Target — blockchain/Web3 backend or Node backend generally? Remote / India / relocation? Expected range?
+5. Existing material — old CV, LinkedIn, or nothing?
+
+This repo is part of the pitch, not a side project: a documented study plan, incident-style problems
+and written debriefs is unusual evidence. It should be visible, not buried.
+
+**Then** back to the rebuild pass: **02 — The Frozen Indexer**. Learning continues at 2–3 units/day
+alongside a small daily application slice; it does not pause for the job hunt.
 
 ```bash
 cd phase2_nodejs_ts/practice
-nvm use            # .nvmrc → Node 24. Check: node --version
-npm run check 01
+nvm use
+npm run check 02
 ```
 
-Order: 01 → 02 → 03 → 04 → 05, then on to **2.0d + 08** where I left off.
-Docs already read and not to be re-read: 2.0a, 2.0b, 2.0c (notes for 2.0c are beside the doc).
+⚠️ `.solutions/` holds pass-one answers. 01's is now fair game (01 is solved); 02–05 are not.
 
 ## 📅 This Saturday
 
@@ -35,6 +52,45 @@ Once the rebuild is done, Saturday goes back to **08 (Strategy Plugins)**, ★�
 **06 (Merkle)** wants 2.0f (TypeScript's Type System), which **does not exist yet** — flag it then.
 
 ## 🧠 Where my head was
+
+**01 is solved, genuinely mine this time.** 8/8 tests plus 22 extra probes, both functions written
+start to finish, `formatUnits` rewritten from scratch with no hints. Six bugs along the way and I
+fixed all six myself; **three of the six were invisible to the test suite** (interior zeros dropped,
+`BigInt(-prefix)` coercing a string to a float, and an early return that skipped the sign
+re-attachment). Every `formatUnits` test uses decimals 18 or 6 against longer numbers, so small
+`decimals` is a completely untested region — green tests are not the finish line.
+
+Newest variant of my recurring bug: **an early return that bypasses a step every other path takes.**
+And the one to remember: I spent two days learning a `number` can't hold 10¹⁸ wei, then a single `-`
+in front of a string sent the value through a `number` anyway. **Coercion is invisible.**
+
+
+**IEEE-754, properly this time.** Last pass I went straight to string surgery and skipped the *why*.
+Now I can derive the 128-wei error from first principles:
+- A double is 8 bytes = **1 sign + 11 exponent + 52 mantissa**. Only the mantissa holds precision
+  (53 significant bits, because the leading `1` is implicit and free — that's why MAX_SAFE_INTEGER is
+  2⁵³−1, not 2⁵²−1). The exponent holds **scale**, not digits. Stored biased: `actual + 1023`;
+  stored `0` → zero/subnormals (no implicit 1), stored `2047` → Infinity/NaN.
+- `value = (-1)^sign × 1.mantissa × 2^(storedExp − 1023)`. Gap between neighbours = **2^(exp − 52)**.
+  At exp 0 → 2⁻⁵²; at exp 53 → 2 (odd integers vanish); at exp 59 → **128**; at exp 60 → 256.
+- My real mistake was **thinking in decimal**. `1.15 = 23/20`, and 20 = 2²×**5**; binary has no 5s, so
+  it repeats forever like ⅓ in decimal. Stored value is 1.1499999999999999111821580299875…
+- Two failures compose: (1) `parseFloat` is *already* lossy — `console.log` hides it by printing the
+  shortest string that round-trips; (2) the product is then snapped to the 128-grid. And the sting:
+  `1150000000000000000` **is** representable — the inherited error just pushed it nearer the wrong
+  grid point, and rounding locked that in.
+- Floats round (nearest, ties-to-even), they don't truncate, and they never warn. `BigInt` **throws**
+  instead of lying. Nothing ever overflows memory — 8 bytes always; overflow is only at ~1.8e308.
+
+**Regex basics learned** (for the validation gate): `^`/`$` anchor to the whole string — without them
+`.test(" 1")` finds `1` *inside* and returns true; `[0-9]`/`\d`; `?` `*` `+` `{n}`; `\.` because a bare
+`.` is any character; `(?: )` for non-capturing groups; `|` has the lowest precedence so it needs
+parentheses; capture groups can hand back the pieces, so one regex can validate *and* split.
+
+**TypeScript earned its keep**: `split(ai+2)` was a compile error because `split` takes a separator,
+not a position (`slice` does positions). In plain JS it would have coerced to `"1"` and split on the
+character `1` — silently wrong, an hour lost. That's problem 07's whole argument.
+
 
 > ⚠️ Everything below is from the **first pass**. It is a record of what I worked out, not a
 > shortcut — the point of the rebuild is to produce the code without it.
@@ -116,6 +172,9 @@ they remove the boundaries where that bug class lives.
 
 | Date | Units done | What |
 |---|---|---|
+| 2026-11-06 | 2 | **01 SOLVED** (8/8 + 22 probes), all 6 bugs fixed by me. Debrief written (Q3 open). Decided: CV + applications start now, in parallel with the rebuild pass. |
+| 2026-11-04 | 1 | Rewrote parseUnits/formatUnits myself (split/pad/sign logic). 6/8 green. Claude found 4 bugs incl. 2 the suite misses: interior zeros dropped, and `-prefix` coercing a string to a float inside the float-free function. Fixes left to me. |
+| 2026-11-03 | 2 | Company now closed → full-time learning. Deep dive on IEEE-754 (exponent/mantissa/bias/ulp) + regex basics. Wrote isValidNumber + formatUnits; parseUnits structurally wrong, left mid-problem on purpose. |
 | 2026-11-02 | — | Company closing in 1–2 months → depth over speed. Reset PS0 01–05 to starters for a self-solved rebuild pass; old solutions + all NOTES moved to .solutions/ (gitignored). First commit of everything. |
 | 2026-10-29 | 1 | Re-entry after 7 days. 01–05 still 25/25. Read 2.0c and wrote notes beside the doc (first doc-notes file). Step 4 done. |
 | 2026-10-22 | 2 | Solved 04 (5/5; pool 309→208ms) + full debrief. Diagnosis mine, pool implementation Claude's. PS0 now 5/8. |

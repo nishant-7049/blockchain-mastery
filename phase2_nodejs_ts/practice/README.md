@@ -42,7 +42,7 @@ solved yet, which is expected.
 
 | # | Problem | Concept | ★ | Done |
 |---|---------|---------|---|------|
-| 01 | [The Missing Wei](PS0_foundations/01_the_missing_wei/) | IEEE-754 floats, `bigint`, exact money math | ★☆☆ | ⬜ |
+| 01 | [The Missing Wei](PS0_foundations/01_the_missing_wei/) | IEEE-754 floats, `bigint`, exact money math | ★☆☆ | ✅ |
 | 02 | [The Frozen Indexer](PS0_foundations/02_the_frozen_indexer/) | Blocking the event loop, microtask vs macrotask | ★★☆ | ⬜ |
 | 03 | [Duplicate Nonces](PS0_foundations/03_duplicate_nonces/) | Interleaving at `await`, caching promises | ★★☆ | ⬜ |
 | 04 | [Banned by the RPC Provider](PS0_foundations/04_rpc_rate_limit/) | Promises are eager, concurrency pools | ★★☆ | ⬜ |
